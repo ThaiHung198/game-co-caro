@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Game caro</title>
+    <style>
+        #content {
+            width: 400px;
+            height: 450px;
+            background-color: #e0dede;
+            padding: 50px;
+        }
+
+        table {
+            border: 1px solid black;
+        }
+
+        td {
+            border: 1px solid black;
+            width: 30px;
+            height: 30px;
+            text-align: center;
+        }
+        td:hover {
+            background-color: white;
+        }
+        #div1{
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+<div id="content">
+    <h1>Game caro</h1>
+    <div id="div1">
+        <button onclick="start()">Chơi</button>
+        <button>00:00:00</button>
+        <button>Người chơi</button>
+    </div>
+    <div id="result"></div>
+</div>
+<script>
+    let array= new Array(20);
+    let isplayer1= true;
+    let cellwin=[];
+    function start(){
+        cellwin=[];
+        for (let i = 0; i <array.length; i++) {
+            array[i] = new Array(10);
+            for (let j = 0; j < array[i].length; j++) {
+                array[i][j] = "";
+            }
+        }
+    display();
+    }
+    function display() {
+        let tableString = `<table>`;
+        for (let i = 0; i < 10; i++) {
+            tableString+=`<tr>`;
+            for (let j = 0; j < 10; j++) {
+                if (cellwin.includes(`${i}-${j}`)){
+                    if(array[i][j] === "X") {
+                        tableString+=`<td style="color: blue;background-color : lawngreen" onclick="play(${i},${j})">${array[i][j]}</td>`;
+                    } else if(array[i][j] === "O") {
+                        tableString+=`<td style="color: red;background-color: lawngreen" onclick="play(${i},${j})">${array[i][j]}</td>`;
+                    } else {
+                        tableString+=`<td onclick="play(${i},${j})">${array[i][j]}</td>`;
+                    }
+                } else {
+                    if(array[i][j] === "X") {
+                        tableString+=`<td style="color: blue" onclick="play(${i},${j})">${array[i][j]}</td>`;
+                    } else if(array[i][j] === "O") {
+                        tableString+=`<td style="color: red" onclick="play(${i},${j})">${array[i][j]}</td>`;
+                    } else {
+                        tableString+=`<td onclick="play(${i},${j})">${array[i][j]}</td>`;
+                    }
+                }
+
+
+            }
+            tableString+=`</tr>`;
+        }
+
+    tableString += `</table>`;
+        document.getElementById("result").innerHTML = tableString;
+    }
+    function play(i,j){
+        if (cellIsEmpty(i,j)){
+            if (isplayer1){
+                array[i][j] = "X";
+                isplayer1= false;
+                if (checkwin("X")){
+                    alert("X Thắng!!!")
+                }
+            }else{
+                array[i][j] = "O";
+                isplayer1= true;
+                if (checkwin("O")){
+                    alert("O Thắng!!!")
+                }
+            }
+        } else {
+            alert("O nay da danh roi")
+        }
+
+        display();
+    }
+    function cellIsEmpty(i,j){
+        return array[i][j] ==="";
+    }
+    function checkwin(value){
+        for (let i = 0; i <array.length; i++) {
+            for (let j = 0; j < array[i].length; j++) {
+                let checkbn = array[i][j]=== value
+                            && array[i+1][j]=== value
+                            && array[i+2][j]=== value
+                            && array[i+3][j]=== value;
+                let checktd = array[i][j]=== value
+                    && array[i][j+1]=== value
+                    && array[i][j+2]=== value
+                    && array[i][j+3]=== value;
+                let checkcheo1 = array[i][j]=== value
+                    && array[i+1][j+1]=== value
+                    && array[i+2][j+2]=== value
+                    && array[i+3][j+3]=== value;
+                let checkcheo2 = array[i][j]=== value
+                    && array[i+1][j-1]=== value
+                    && array[i+2][j-2]=== value
+                    && array[i+3][j-3]=== value;
+                if(checkbn){
+                    cellwin.push(`${i}-${j}`);
+                    cellwin.push(`${i+1}-${j}`);
+                    cellwin.push(`${i+2}-${j}`);
+                    cellwin.push(`${i+3}-${j}`);
+                    console.log(cellwin);
+                    return true;
+                }
+                if (checktd){
+                    cellwin.push(`${i}-${j}`);
+                    cellwin.push(`${i}-${j+1}`);
+                    cellwin.push(`${i}-${j+2}`);
+                    cellwin.push(`${i}-${j+3}`);
+                    return true;
+                }
+                if (checkcheo1){
+                    cellwin.push(`${i}-${j}`);
+                    cellwin.push(`${i+1}-${j+1}`);
+                    cellwin.push(`${i+2}-${j+2}`);
+                    cellwin.push(`${i+3}-${j+3}`);
+                    return true;
+                }
+                if (checkcheo2){
+                    cellwin.push(`${i}-${j}`);
+                    cellwin.push(`${i+1}-${j-1}`);
+                    cellwin.push(`${i+2}-${j-2}`);
+                    cellwin.push(`${i+3}-${j-3}`);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+</script>
+</body>
+</html>
