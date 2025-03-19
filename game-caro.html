@@ -115,25 +115,29 @@
                 let checkbn = array[i][j]=== value
                             && array[i+1][j]=== value
                             && array[i+2][j]=== value
-                            && array[i+3][j]=== value;
+                            && array[i+3][j]=== value
+                            && array[i+4][j]=== value;
                 let checktd = array[i][j]=== value
                     && array[i][j+1]=== value
                     && array[i][j+2]=== value
-                    && array[i][j+3]=== value;
+                    && array[i][j+3]=== value
+                    && array[i][j+4]=== value;
                 let checkcheo1 = array[i][j]=== value
                     && array[i+1][j+1]=== value
                     && array[i+2][j+2]=== value
-                    && array[i+3][j+3]=== value;
+                    && array[i+3][j+3]=== value
+                    && array[i+4][j+4]=== value;
                 let checkcheo2 = array[i][j]=== value
                     && array[i+1][j-1]=== value
                     && array[i+2][j-2]=== value
-                    && array[i+3][j-3]=== value;
+                    && array[i+3][j-3]=== value
+                    && array[i+4][j-4]=== value;
                 if(checkbn){
                     cellwin.push(`${i}-${j}`);
                     cellwin.push(`${i+1}-${j}`);
                     cellwin.push(`${i+2}-${j}`);
                     cellwin.push(`${i+3}-${j}`);
-                    console.log(cellwin);
+                    cellwin.push(`${i+4}-${j}`);
                     return true;
                 }
                 if (checktd){
@@ -141,6 +145,7 @@
                     cellwin.push(`${i}-${j+1}`);
                     cellwin.push(`${i}-${j+2}`);
                     cellwin.push(`${i}-${j+3}`);
+                    cellwin.push(`${i}-${j+4}`);
                     return true;
                 }
                 if (checkcheo1){
@@ -148,6 +153,7 @@
                     cellwin.push(`${i+1}-${j+1}`);
                     cellwin.push(`${i+2}-${j+2}`);
                     cellwin.push(`${i+3}-${j+3}`);
+                    cellwin.push(`${i+3}-${j+4}`);
                     return true;
                 }
                 if (checkcheo2){
@@ -155,6 +161,7 @@
                     cellwin.push(`${i+1}-${j-1}`);
                     cellwin.push(`${i+2}-${j-2}`);
                     cellwin.push(`${i+3}-${j-3}`);
+                    cellwin.push(`${i+4}-${j-4}`);
                     return true;
                 }
             }
